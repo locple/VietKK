@@ -1,4 +1,4 @@
-# Gõ tiếng Việt bằng phương pháp KK (Key Combination)
+# Gõ tiếng Việt bằng KK (Key Combination)
 
 Tổ hợp phím có nghĩa là nhấn đồng thời 2 hay nhiều phím, để xuất ra mỗi lần một chữ cái tiếng Việt có đầy đủ dấu *(không thêm dấu sau khi gõ nữa)*
 - Mỗi nguyên âm có dấu được tổ hợp từ 2 phím lân cận.</li>
@@ -6,7 +6,7 @@ Tổ hợp phím có nghĩa là nhấn đồng thời 2 hay nhiều phím, để
 # Hướng dẫn gõ trên bàn phím QWERTY:
 <img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
-# Minh họa cách nhúng VietKK vào web:
+# Minh họa cách nhúng VietKK vào trang web:
 Chương trình vietkk.js dùng để tích hợp phương pháp gõ KK vào các TextBox, TextArea trên trình duyệt web (đã test trên MS Edge).
 ```javascript
 <script type="text/javascript" src="vietkk.js"></script>
