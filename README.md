@@ -4,6 +4,6 @@ Nhấn đồng thời tổ hợp phím để xuất ra mỗi lần một chữ c
 - Mỗi nguyên âm có dấu được tổ hợp từ 2 phím lân cận.</li>
 - Các phím dấu thanh có thể tổ hợp với phím nguyên âm không dấu hoặc tổ hợp phím nguyên âm có dấu.
 
-<img src="kk_keyboard_layout.jpg" width="800" height="400"/)
+<img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
 © 2024 **Lê Phước Lộc** *(phuocloc@gmail.com)*
