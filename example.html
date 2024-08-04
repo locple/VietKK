@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>VietKK Testing</title><style></style></head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="phuocloc@gmail.com" />
+<body>
+    <h1>Gõ tiếng Việt bằng phương pháp KK</h1>
+    <p><label>Nhấn đồng thời tổ hợp phím để xuất ra mỗi lần một chữ cái tiếng Việt có đầy đủ dấu <i>(không thêm dấu sau khi gõ nữa)</i></label></p>
+    <ul><li>Mỗi nguyên âm có dấu được tổ hợp từ 2 phím lân cận.</li>
+    <li>Các phím dấu thanh có thể tổ hợp với phím nguyên âm không dấu hoặc tổ hợp phím nguyên âm có dấu.</li></ul>
+    <img src="kk_keyboard_layout.jpg" alt="Quy ước tổ hợp phím KK" width="800" height="300">
+    <textarea id="userInput" rows="15" cols="100" onpaste="return false" spellcheck="false"></textarea>
+    <p><label>&#169; 2024 <b>Lê Phước Lộc</b> <i>(phuocloc@gmail.com)</i></label></p>
+    <script type="text/javascript" src="vietkk.js"></script>
+    <script>
+        var textArea = document.getElementById("userInput");
+
+        // Attach VietKK with textArea element
+        var vKK = new VietKK();
+        vKK.attach(textArea);
+    </script>
+</body>
+</html>
