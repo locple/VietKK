@@ -6,4 +6,16 @@ Tổ hợp phím có nghĩa là nhấn đồng thời 2 hay nhiều phím, để
 # Hướng dẫn gõ trên bàn phím QWERTY:
 <img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
+# Minh họa cách nhúng VietKK vào web:
+Chương trình vietkk.js dùng để tích hợp phương pháp gõ KK vào các TextBox, TextArea trên trình duyệt web (đã test trên MS Edge).
+```javascript
+<script type="text/javascript" src="vietkk.js"></script>
+<script>
+    var textArea = document.getElementById("userInput");
+    var vKK = new VietKK();
+    vKK.attach(textArea);
+</script>
+```
+Tham khảo file example.html
+
 © 2024 **Lê Phước Lộc** *(phuocloc@gmail.com)*
