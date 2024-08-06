@@ -12,7 +12,6 @@ function VietKK() {		// Class VietKK
         68: false, 70: false, 84: false, 71: false, 86: false, 82: false // D,F,T,G,V,R for đ and diacritics
       };
     this.maxInterval = 70;	// (milisecond) maximum interval time between keys pressed down at once 
-    this.readReady = true;	// readReady=false -> wait until any key pressed (readReady=true)
 }
 
 VietKK.Letters = [	// All Vietnamese letters to replace the KK combinations
@@ -35,7 +34,6 @@ VietKK.Letters = [	// All Vietnamese letters to replace the KK combinations
 VietKK.prototype.setMode = function(mode) {		// Enable or disable KK method
     this.mode = (mode == 1) ? true : false;
     this.clear();
-    this.readReady = true;
 };
 
 VietKK.prototype.attach = function(el, mode) {	// Register an element (el), default mode=1
@@ -52,7 +50,6 @@ VietKK.prototype.attach = function(el, mode) {	// Register an element (el), defa
         if (e.ctrlKey || e.altKey || e.metaKey)	// KK keys can't go with Ctrl, Alt, Win
             self.clear();
         else {
-            self.readReady = true;
             if (self.kk.hasOwnProperty(e.keyCode)) {
                 self.kk[e.keyCode] = true;
             }
@@ -86,24 +83,21 @@ VietKK.prototype.attach = function(el, mode) {	// Register an element (el), defa
         if (!self.mode) return true;
         e = e || event;	// Lagecy IE compatibility
 
-        if (self.kk.hasOwnProperty(e.keyCode)) {
-            if (self.readReady) {	// Only print when the first key in the combination released
-                let idx = self.getLetterIndex();
-                let caseIdx = (e.getModifierState && e.getModifierState("CapsLock")) ^ e.shiftKey;
+        if (self.hasAnyKKey()) {	// Only print when the first key in the combination released
+            let idx = self.getLetterIndex();
+            let caseIdx = (e.getModifierState && e.getModifierState("CapsLock")) ^
+                          (e.keyCode == 16 ? true : e.shiftKey);	// If shift key just gone up
 
-                if (idx < 0) {		// Not any known combination (regular character)
-                    self.printNonKKeys(caseIdx);
-                } else {			// Known combinations to print
-                    self.readReady = false;
-                    let letter = VietKK.Letters[idx][self.getToneIndex()][caseIdx];
-                    let curPos = self.typer.selectionStart;
-                    self.typer.value = self.typer.value.substring(0, curPos) + letter
-                                     + self.typer.value.substring(self.typer.selectionEnd);
-                    self.typer.selectionStart = self.typer.selectionEnd = curPos + letter.length;
-                }
-                self.clear();
+            if (idx < 0) {		// Not any known combination (regular character)
+                self.printNonKKeys(caseIdx);
+            } else {			// Known combinations to print
+                let letter = VietKK.Letters[idx][self.getToneIndex()][caseIdx];
+                let curPos = self.typer.selectionStart;
+                self.typer.value = self.typer.value.substring(0, curPos) + letter
+                                 + self.typer.value.substring(self.typer.selectionEnd);
+                self.typer.selectionStart = self.typer.selectionEnd = curPos + letter.length;
             }
-            self.kk[e.keyCode] = false;
+            self.clear();
         }
     });
 };
