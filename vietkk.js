@@ -1,6 +1,6 @@
 /**
  * KK (Key Combinations) - A Vietnamese input method by Le Phuoc Loc
- * KK Input Editor v1.0 - KK Implementation for TextBox/TextArea elements in browsers
+ * KK Input Editor v1.2 - KK Implementation for TextBox/TextArea elements in browsers
  * Created on Aug-4-2024 by Le Phuoc Loc: https://github.com/locple/VietKK
  */
 
@@ -12,6 +12,7 @@ function VietKK() {		// Class VietKK
         68: false, 70: false, 84: false, 71: false, 86: false, 82: false // D,F,T,G,V,R for đ and diacritics
       };
     this.maxInterval = 70;	// (milisecond) maximum interval time between keys pressed down at once 
+    this.readReady = true;	// readReady=false -> wait until any key pressed (readReady=true)
 }
 
 VietKK.Letters = [	// All Vietnamese letters to replace the KK combinations
@@ -34,6 +35,7 @@ VietKK.Letters = [	// All Vietnamese letters to replace the KK combinations
 VietKK.prototype.setMode = function(mode) {		// Enable or disable KK method
     this.mode = (mode == 1) ? true : false;
     this.clear();
+    this.readReady = true;
 };
 
 VietKK.prototype.attach = function(el, mode) {	// Register an element (el), default mode=1
@@ -50,6 +52,7 @@ VietKK.prototype.attach = function(el, mode) {	// Register an element (el), defa
         if (e.ctrlKey || e.altKey || e.metaKey)	// KK keys can't go with Ctrl, Alt, Win
             self.clear();
         else {
+            self.readReady = true;
             if (self.kk.hasOwnProperty(e.keyCode)) {
                 self.kk[e.keyCode] = true;
             }
@@ -60,44 +63,57 @@ VietKK.prototype.attach = function(el, mode) {	// Register an element (el), defa
         if (!self.mode) return true;
         e = e || event;	// Lagecy IE compatibility
 
+        // Print keys in case quick typing (new keypress before expected keyup)
         if (!e.ctrlKey && !e.altKey && !e.metaKey	// KK keys can't go with Ctrl, Alt, Win
             && self.hasAnyKKey()) {
-
-            // If keys pressed in quick sequence, clear KK array and print as regular keys 
             let currentPressTime = Date.now();
             if (self.previousPressTime != 0 &&
-			    currentPressTime - self.previousPressTime > self.maxInterval) {
+			    currentPressTime - self.previousPressTime > self.maxInterval) {	// Quick typing case
                 let caseIdx = (e.getModifierState && e.getModifierState("CapsLock")) ^ e.shiftKey;
-                self.kk[e.keyCode - (caseIdx ? 0 : 32)] = false;	// convert to real key code
-                self.printNonKKeys(caseIdx);
-                return true;
+                let keyCode = e.keyCode - (caseIdx ? 0 : 32);
+                if (self.kk.hasOwnProperty(keyCode))
+                   self.kk[keyCode] = false;	// Temporary hide the new KK key
+
+                let idx = self.getLetterIndex();
+                if (idx < 0) {
+                    self.printRegularLetters(caseIdx);
+                } else {
+                    self.printVietLetter(idx, caseIdx);
+                }
+
+                if (self.kk.hasOwnProperty(keyCode)) {
+                    self.kk[keyCode] = true;	// Re-save the new KK key
+                } else {
+                    self.previousPressTime = currentPressTime;
+                    return true;				// Let keypress print the new non-KK key
+                }
             }
 
-            self.previousPressTime = currentPressTime;
+            // Keep the KK new KK key for printing later
             e.preventDefault && e.preventDefault();
+            self.previousPressTime = currentPressTime;
             return false;
         }
     });
 
-    el.addEventListener("keyup", function(e) {	// Print KK keys in keyup event
+    el.addEventListener("keyup", function(e) {	// Print the letter by KK keys in keyup event
         if (!self.mode) return true;
         e = e || event;	// Lagecy IE compatibility
 
-        if (self.hasAnyKKey()) {	// Only print when the first key in the combination released
-            let idx = self.getLetterIndex();
-            let caseIdx = (e.getModifierState && e.getModifierState("CapsLock")) ^
-                          (e.keyCode == 16 ? true : e.shiftKey);	// If shift key just gone up
+        var isShiftUp = (e.keyCode == 16);		// Exception in case shift key just up
+        if (isShiftUp || (self.kk.hasOwnProperty(e.keyCode) && self.kk[e.keyCode])) {
+            if (self.readReady) {	// Print key ASAP the first key released
+                let caseIdx = (e.getModifierState && e.getModifierState("CapsLock"))
+                              ^ (isShiftUp || e.shiftKey);
 
-            if (idx < 0) {		// Not any known combination (regular character)
-                self.printNonKKeys(caseIdx);
-            } else {			// Known combinations to print
-                let letter = VietKK.Letters[idx][self.getToneIndex()][caseIdx];
-                let curPos = self.typer.selectionStart;
-                self.typer.value = self.typer.value.substring(0, curPos) + letter
-                                 + self.typer.value.substring(self.typer.selectionEnd);
-                self.typer.selectionStart = self.typer.selectionEnd = curPos + letter.length;
+                let idx = self.getLetterIndex();
+                if (idx < 0) {
+                    self.printRegularLetters(caseIdx);
+                } else {
+                    self.readReady = false;
+                    self.printVietLetter(idx, caseIdx);
+                }
             }
-            self.clear();
         }
     });
 };
@@ -114,7 +130,7 @@ VietKK.prototype.hasAnyKKey = function() {	// Is there any KK key pressed?
     return false;
 };
 
-VietKK.prototype.printNonKKeys = function(caseIdx) {	// Print regular keys in KK array
+VietKK.prototype.printRegularLetters = function(caseIdx) {	// Print regular keys in KK array
     for (var code in this.kk)
         if (this.kk.hasOwnProperty(code) && this.kk[code]) {
             let curPos = this.typer.selectionStart;
@@ -125,6 +141,15 @@ VietKK.prototype.printNonKKeys = function(caseIdx) {	// Print regular keys in KK
         }
     this.clear();
 };
+
+VietKK.prototype.printVietLetter = function(index, caseIdx) {		// Print keys in KK array
+    let letter = VietKK.Letters[index][this.getToneIndex()][caseIdx];
+    let curPos = this.typer.selectionStart;
+    this.typer.value = this.typer.value.substring(0, curPos) + letter
+                     + this.typer.value.substring(this.typer.selectionEnd);
+    this.typer.selectionStart = this.typer.selectionEnd = curPos + letter.length;
+    this.clear();
+}
 
 VietKK.prototype.getLetterIndex = function() {
     if (this.kk[65]  && !this.kk[83] && !this.kk[87])	return 0;	// a
