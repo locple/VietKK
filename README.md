@@ -8,7 +8,7 @@ Phương pháp này cho phép gõ xen kẽ tiếng Việt và tiếng Anh rất 
 # Hướng dẫn gõ trên bàn phím QWERTY:
 <img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
-# Online Demo: https://k2.ai.vn
+# Online Demo: [k2.ai.vn](https://k2.ai.vn)
 
 # Minh họa cách nhúng VietKK vào trang web:
 Chương trình vietkk.js dùng để tích hợp phương pháp gõ KK vào các TextBox, TextArea trên trình duyệt web (đã test trên MS Edge).
