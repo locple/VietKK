@@ -2,7 +2,7 @@
 
 Tổ hợp phím có nghĩa là nhấn đồng thời 2 hay nhiều phím, để xuất ra mỗi lần một chữ cái tiếng Việt có đầy đủ dấu *(không thêm dấu sau khi gõ nữa)*
 - **Â Ă Ê Ư Ơ Ô Đ**: dùng **2 ngón nhấn cùng lúc** các cặp phím như hình dưới.
-- **Dấu thanh**: nhấn các cặp phím như hình thứ hai để **gõ dấu ở cuối từ** hay sau nguyên âm.
+- **Dấu thanh**: dùng các cặp phím dấu ở hình thứ hai, **gõ dấu ở cuối từ** hay sau nguyên âm
 
 Phương pháp này cho phép gõ xen kẽ tiếng Việt và tiếng Anh rất tiện lợi.
 # Hướng dẫn gõ trên bàn phím QWERTY:
