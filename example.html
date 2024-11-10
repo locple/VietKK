@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head><title>VietKK Testing</title><style></style></head>
+<head>
+<title>VietK2K Input Method</title>
+<style>body { font-family: Arial, sans-serif; }</style>
+</head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="author" content="phuocloc@gmail.com" />
 <body>
     <h1>Gõ tiếng Việt bằng phương pháp KK</h1>
-    <p><label>Nhấn đồng thời tổ hợp phím để xuất ra mỗi lần một chữ cái tiếng Việt có đầy đủ dấu <i>(không thêm dấu sau khi gõ nữa)</i></label></p>
-    <ul><li>Mỗi nguyên âm có dấu được tổ hợp từ 2 phím lân cận.</li>
-    <li>Các phím dấu thanh có thể tổ hợp với phím nguyên âm không dấu hoặc tổ hợp phím nguyên âm có dấu.</li></ul>
-    <img src="kk_keyboard_layout.jpg" alt="Quy ước tổ hợp phím KK" width="800" height="300">
-    <textarea id="userInput" rows="15" cols="100" onpaste="return false" spellcheck="false"></textarea>
-    <p><label>&#169; 2024 <b>Lê Phước Lộc</b> <i>(phuocloc@gmail.com)</i></label></p>
+    <br/>
+    <p style="color: darkred;">Trước khi bắt đầu, <b>VUI LÒNG TẮT KIỂU GÕ TIẾNG VIỆT</b> hiện tại trên máy PC hay laptop của bạn.</p>
+    <h3 style="color: darkblue;">Hướng dẫn gõ tiếng Việt theo KK:</h3>
+    <p style="margin-left: 30px;"><b>Â Ă Ê Ư Ơ Ô Đ</b>: dùng <b>2 ngón nhấn cùng lúc</b> các cặp phím như hình dưới.</p>
+    <p style="margin-left: 30px;"><b>Dấu thanh</b>: nhấn các cặp phím như hình thứ hai để gõ dấu <b>ở cuối từ</b> hay sau nguyên âm.</p>
+    <img src="kk_keyboard_layout.jpg" alt="Quy ước tổ hợp phím KK">
+    <p><textarea id="userInput" rows="15" cols="90" style="font-size: 18px;" onpaste="return false" spellcheck="false"></textarea></p>
+    <p>&#169; 2024 Lê Phước Lộc (<a href="https://github.com/locple/VietKK">github.com/locple/VietKK</a>)</p>
     <script type="text/javascript" src="vietkk.js"></script>
     <script>
         var textArea = document.getElementById("userInput");
@@ -18,6 +23,7 @@
         // Attach VietKK with textArea element
         var vKK = new VietKK();
         vKK.attach(textArea);
+        vKK.setMode(1);
     </script>
 </body>
 </html>
