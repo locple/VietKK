@@ -1,10 +1,16 @@
 # Gõ tiếng Việt bằng KK (Key Combination)
 
-Tổ hợp phím có nghĩa là nhấn đồng thời 2 hay nhiều phím, để xuất ra mỗi lần một chữ cái tiếng Việt có đầy đủ dấu *(không thêm dấu sau khi gõ nữa)*
-- **Â Ă Ê Ư Ơ Ô Đ**: dùng **2 ngón nhấn cùng lúc** các cặp phím như hình dưới.
-- **Dấu thanh**: dùng các cặp phím dấu ở hình thứ hai, **gõ dấu ở cuối từ** hay sau nguyên âm
+Tổ hợp phím có nghĩa là nhấn đồng thời 2 phím cùng lúc để gõ dấu tiếng Việt, không gõ tuần tự từng phím dấu nữa.
 
-Phương pháp này cho phép gõ xen kẽ tiếng Việt và tiếng Anh rất tiện lợi.
+Phương pháp này không chiếm dụng các phím đơn như S,F,R,X,J (TELEX) hay 1,...,8 (VNI) để gõ dấu mà chỉ dùng các cặp phím chữ (ít có phần mềm nào dùng ngoại trừ games). Nhờ vậy có thể gõ xen kẽ tiếng Việt và tiếng Anh một cách tiện lợi.
+
+Đầu tiên **gõ chữ không có dấu**, sau đó **thêm đồng thời dấu thanh và dấu phụ** bằng cách nhấn cùng lúc cặp phím như hình dưới.
+- **Phím dấu thanh chính** gồm: **S, F, R, X, J** (sắc, huyền, hỏi, ngã, nặng). Nhấn phím trái hay phải cùng lúc với phím chính để gõ dấu.
+- Để có **dấu mũ thì nhấn cặp phím bên phải**, **các dấu phụ còn lại thì nhấn cặp phím bên trái** (nhấn luân phiên để đổi dấu).
+
+Ví dụ: **dấu sắc có mũ** thì nhấn **S** + phím phải (**D**); **chỉ dấu sắc** thì nhấn **S** + phím trái (**A**); **dấu sắc có trăng** thì nhấn **2 lần S + A**.
+Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có thể dùng các cặp phím khác để gõ tiện hơn như ghi chú bên dưới.
+
 # Hướng dẫn gõ trên bàn phím QWERTY:
 <img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
