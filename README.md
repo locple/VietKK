@@ -2,7 +2,7 @@
 
 Tổ hợp phím có nghĩa là nhấn đồng thời 2 phím cùng lúc để gõ dấu tiếng Việt, không gõ tuần tự từng phím dấu nữa.
 
-Phương pháp này không chiếm dụng các phím đơn như S,F,R,X,J (TELEX) hay 1,...,8 (VNI) để gõ dấu mà chỉ dùng các cặp phím chữ (ít có phần mềm nào dùng ngoại trừ games). Nhờ vậy có thể gõ xen kẽ tiếng Việt và tiếng Anh một cách tiện lợi.
+Phương pháp này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1,...,8 (VNI) để gõ dấu mà chỉ dùng các cặp phím chữ (ít có phần mềm nào dùng ngoại trừ games). Nhờ vậy có thể gõ xen kẽ tiếng Việt và tiếng Anh một cách tiện lợi.
 
 Đầu tiên **gõ chữ không có dấu**, sau đó **thêm đồng thời dấu thanh và dấu phụ** bằng cách nhấn cùng lúc cặp phím như hình dưới.
 - **Phím dấu thanh chính** gồm: **S, F, R, X, J** (sắc, huyền, hỏi, ngã, nặng). Nhấn phím trái hay phải cùng lúc với phím chính để gõ dấu.
