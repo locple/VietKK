@@ -1,87 +1,121 @@
 /**
- * KK (Key Combinations I) - A Vietnamese input method by Le Phuoc Loc
- * KK Input Editor v2.0 - KK Implementation for TextBox/TextArea elements in browsers
+ * KK (Key Combinations) - A Vietnamese input method by Le Phuoc Loc
+ * KK Input Editor v2.3 - KK Implementation for TextBox/TextArea elements in browsers
  * Created on Aug-04-2024 by Le Phuoc Loc: https://github.com/locple/VietKK
- * Updated on Nov-11-2024
+ * Updated on Nov-19-2024
  */
 
 function VietKK(mode) {	// Class VietKK
     // mode: 1=KK (default), 0=off
     this.active = !(mode == undefined || mode == null || mode == 0);
     this.kk = {			// Current status of all KK keys
-        65: false,	67: false,	68: false,	69: false,
+        65: false,	66: false,	67: false,	68: false,	69: false,
         70: false,	71: false,	72: false,	73: false,	74: false,	75: false,	76: false,	77: false,	78: false,	79: false,
-        80: false,	81: false,	82: false,	83: false,	84: false,	85: false,	86: false,	87: false,	89: false,
+        80: false,	81: false,	82: false,	83: false,	84: false,	85: false,	86: false,	87: false,	88: false,	90: false,
         219: false
       };
-    this.maxInterval = 70;	// (milisecond) maximum interval time between keys pressed down at once 
+    this.keyInterval = 60;	// (milisecond) maximum interval time between keys pressed down at once 
     this.readReady = true;	// readReady=false -> wait until any key pressed (readReady=true)
     this.typers = [];		// Array of attached typers (TextAreas, TextBoxes)
 }
 
-VietKK.Vowels = [	// Array of Vietnamese vowels, column index locate the vowel with corresponding tone.
-        [["ươ","ƯƠ"], ["ướ","ƯỚ"], ["ườ","ƯỜ"], ["ượ","ƯỢ"], ["ưở","ƯỞ"], ["ưỡ","ƯỠ"]],	// Note: "Ươ" should be typed seperately
-        [["uô","UÔ"], ["uố","UỐ"], ["uồ","UỒ"], ["uộ","UỘ"], ["uổ","UỔ"], ["uỗ","UỖ"]],	// Note: "Uô" should be typed seperately
-        [["â", "Â"],  ["ấ", "Ấ"],  ["ầ", "Ầ"],  ["ậ", "Ậ"],  ["ẩ", "Ẩ"],  ["ẫ", "Ẫ"]],	// First diacritic vowel index = 2 (used in modifing tones)
-        [["ă", "Ă"],  ["ắ", "Ắ"],  ["ằ", "Ằ"],  ["ặ", "Ặ"],  ["ẳ", "Ẳ"],  ["ẵ", "Ẵ"]],
-        [["ê", "Ê"],  ["ế", "Ế"],  ["ề", "Ề"],  ["ệ", "Ệ"],  ["ể", "Ể"],  ["ễ", "Ễ"]],
-        [["ư", "Ư"],  ["ứ", "Ứ"],  ["ừ", "Ừ"],  ["ự", "Ự"],  ["ử", "Ử"],  ["ữ", "Ữ"]],
-        [["ơ", "Ơ"],  ["ớ", "Ớ"],  ["ờ", "Ờ"],  ["ợ", "Ợ"],  ["ở", "Ở"],  ["ỡ", "Ỡ"]],
-        [["ô", "Ô"],  ["ố", "Ố"],  ["ồ", "Ồ"],  ["ộ", "Ộ"],  ["ổ", "Ổ"],  ["ỗ", "Ỗ"]],	// Last diacritic vowel index  = 7 (used in modifing tones)
-        [["a", "A"],  ["á", "Á"],  ["à", "À"],  ["ạ", "Ạ"],  ["ả", "Ả"],  ["ã", "Ã"]],
-        [["e", "E"],  ["é", "É"],  ["è", "È"],  ["ẹ", "Ẹ"],  ["ẻ", "Ẻ"],  ["ẽ", "Ẽ"]],
-        [["i", "I"],  ["í", "Í"],  ["ì", "Ì"],  ["ị", "Ị"],  ["ỉ", "Ỉ"],  ["ĩ", "Ĩ"]],
-        [["o", "O"],  ["ó", "Ó"],  ["ò", "Ò"],  ["ọ", "Ọ"],  ["ỏ", "Ỏ"],  ["õ", "Õ"]],
-        [["u", "U"],  ["ú", "Ú"],  ["ù", "Ù"],  ["ụ", "Ụ"],  ["ủ", "Ủ"],  ["ũ", "Ũ"]],
-        [["y", "Y"],  ["ý", "Ý"],  ["ỳ", "Ỳ"],  ["ỵ", "Ỵ"],  ["ỷ", "Ỷ"],  ["ỹ", "Ỹ"]]
-      ];
+VietKK.Vowels = [	// Single vowels columns: = Latin letter (for convertion only), 6 tones (level,acute,grave,dot,hook,tilde)
+        [["a", "A"],	["â", "Â"],  ["ấ", "Ấ"],  ["ầ", "Ầ"],  ["ậ", "Ậ"],  ["ẩ", "Ẩ"],  ["ẫ", "Ẫ"]],	// 0: First diacritic vowel index (used in placing tones)
+        [["a", "A"],	["ă", "Ă"],  ["ắ", "Ắ"],  ["ằ", "Ằ"],  ["ặ", "Ặ"],  ["ẳ", "Ẳ"],  ["ẵ", "Ẵ"]],	// 1
+        [["e", "E"],	["ê", "Ê"],  ["ế", "Ế"],  ["ề", "Ề"],  ["ệ", "Ệ"],  ["ể", "Ể"],  ["ễ", "Ễ"]],	// 2
+        [["u", "U"],	["ư", "Ư"],  ["ứ", "Ứ"],  ["ừ", "Ừ"],  ["ự", "Ự"],  ["ử", "Ử"],  ["ữ", "Ữ"]],	// 3
+        [["o", "O"],	["ô", "Ô"],  ["ố", "Ố"],  ["ồ", "Ồ"],  ["ộ", "Ộ"],  ["ổ", "Ổ"],  ["ỗ", "Ỗ"]],	// 4
+        [["o", "O"],	["ơ", "Ơ"],  ["ớ", "Ớ"],  ["ờ", "Ờ"],  ["ợ", "Ợ"],  ["ở", "Ở"],  ["ỡ", "Ỡ"]],	// 5: Last diacritic vowel index (used in placing tones)
+        [["a", "A"],	["a", "A"],  ["á", "Á"],  ["à", "À"],  ["ạ", "Ạ"],  ["ả", "Ả"],  ["ã", "Ã"]],	// 6
+        [["e", "E"],	["e", "E"],  ["é", "É"],  ["è", "È"],  ["ẹ", "Ẹ"],  ["ẻ", "Ẻ"],  ["ẽ", "Ẽ"]],	// 7
+        [["i", "I"],	["i", "I"],  ["í", "Í"],  ["ì", "Ì"],  ["ị", "Ị"],  ["ỉ", "Ỉ"],  ["ĩ", "Ĩ"]],	// 8
+        [["o", "O"],	["o", "O"],  ["ó", "Ó"],  ["ò", "Ò"],  ["ọ", "Ọ"],  ["ỏ", "Ỏ"],  ["õ", "Õ"]],	// 9
+        [["u", "U"],	["u", "U"],  ["ú", "Ú"],  ["ù", "Ù"],  ["ụ", "Ụ"],  ["ủ", "Ủ"],  ["ũ", "Ũ"]],	// 10
+        [["y", "Y"],	["y", "Y"],  ["ý", "Ý"],  ["ỳ", "Ỳ"],  ["ỵ", "Ỵ"],  ["ỷ", "Ỷ"],  ["ỹ", "Ỹ"]]	// 11
+];
 
-VietKK.VowelKeys = [	// Key codes to type the corresponding letters in the Vowels array.
-        [85, 73, 79],	// UIO -> ươ
-        [73, 79, 80],	// IOP -> uô
-        [65, 83],		// AS  -> â
-        [65, 87],		// AW  -> ă
-        [87, 69],		// WE  -> ê
-        [85, 73],		// UI  -> ư
-        [73, 79],		// IO  -> ơ
-        [79, 80],		// OP  -> ô
-      ];
+VietKK.SingleVowel = [	// Double vowel columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+        ["a",	6,		0,		1],		// a: a â ă
+        ["e",	7,		2,		2],		// e: e ê ê
+        ["i",	8,		8,		8],		// i: i i i
+        ["o",	9,		4,		5],		// o: o ô ơ
+        ["u",	10,		3,		3],		// u: u ư ư
+        ["y",	11,		11,		11]		// y: y y y
+];
 
-VietKK.ToneKeys = [	// Key codes to type tone after the corresponding vowel or the whole word.
-        [83, 68],		// SD  -> acute (sắc)
-        [68, 70],		// DF  -> grave (huyền)
-        [74, 75],		// JK  -> dot (nặng)
-        [69, 82],		// ER  -> question (hỏi)
-        [75, 76]		// KL  -> tilde (ngã)
-      ];
+VietKK.DoubleVowels = [	// Double vowel columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+        ["ai",	[6, 8],		[6, 8],		[6, 8]],		// ai: ai ai ai		// Also for oai
+        ["ao",	[6, 9],		[6, 9],		[6, 9]],		// ao: ao ao ao		// Also for uao, oao (example hoao)
+        ["au",	[6, 10],	[0, 10],	[0, 10]],		// au: au âu âu
+        ["ay",	[6, 11], 	[0, 11],	[0, 11]],		// ay: ay ây ây		// Also for oay
+        ["uo",	[3, 5],		[10, 4],	[3, 5]],		// uo: ươ uô ươ		// Note: if vowel length != 2
+        ["uo",	[10, 5],	[10, 5],	[10, 5]],		// uo: uơ uơ uơ		// Note: if vowel length == 2
+        ["ua",	[10, 6],	[10, 0],	[3, 6]],		// ua: ua uâ ưa		// Note: uă not supported
+        ["ui",	[10, 8],	[3, 8],		[3, 8]],		// ui: ui ưi ưi
+        ["eu",	[2, 10], 	[2, 10],	[2, 10]],		// eu: êu êu êu		// Also for yêu, iêu
+        ["eo",	[7, 9],		[7, 9],		[7, 9]],		// eo: eo eo eo		// Also for oeo (example ngoéo)
+        ["ia",	[8, 6],		[8, 6],		[8, 6]],		// ia: ia ia ia
+        ["ie",	[8, 2],		[8, 2],		[8, 2]],		// ie: iê iê iê
+        ["iu",	[8, 10],	[8, 10],	[8, 10]],		// iu: iu iu iu
+        ["oa",	[9, 6],		[9, 1],		[9, 1]],		// oa: oa oă oă
+        ["oe",	[9, 7],		[9, 7],		[9, 7]],		// oe: oe oe oe
+        ["oi",	[9, 8],		[4, 8],		[5, 8]],		// oi: oi ôi ơi
+        ["ue",	[10, 2],	[10, 2],	[10, 2]],		// ue: uê uê uê
+        ["uu",	[10, 10],	[3, 10],	[3, 10]],		// uu: uu ưu ưu
+        ["uy",	[10, 11],	[10, 11],	[10, 11]],		// uy: uy uy uy
+        ["ye",	[11, 2],	[11, 2],	[11, 2]],		// ye: yê yê yê		// Also for uyê
+        ["oo",	[9, 9],		[4, 4],		[4, 4]]			// oo: oo ôô ôô
+];
 
-VietKK.Consonants = [	// Array of Vietnamese diacritic consonant / double consonants, column index locate the lowercase/uppercase consonant.
+VietKK.TripleVowels = [	// Triple vowel (not all) columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+        ["uoi",	[3, 5, 8],		[10, 4, 8],		[3, 5, 8]],		// uoi: ươi uôi ươi
+        ["uou",	[3, 5, 10],		[3, 5, 10],		[3, 5, 10]],	// uou: ươu ươu ươu
+        ["uya",	[10, 11, 6],	[10, 11, 6],	[10, 11, 6]],	// uya: uya uya uya
+        ["uyu",	[10, 11, 10],	[10, 11, 10],	[10, 11, 10]]	// uyu: uyu uyu uyu (example khuỷu)
+];
+
+VietKK.DiacriticKeys = [	// Key codes to type diacritics after the whole word (or when modifying it). Row indexes = 6 tones, column indexes = (none, circumflex, breve/horn)
+        [[87, 69],	[73, 79]],		// WE = level + breve/horn, IO = level + circumflex
+        [[65, 83],	[83, 68]],		// AS = acute (+ breve/horn), SD = acute + circumflex
+        [[68, 70],	[70, 71]],		// DF = grave (+ breve/horn), FG = grave + circumflex
+        [[72, 74],	[74, 75]],		// HJ = dot (+ breve/horn), JK = dot + circumflex
+        [[69, 82],	[82, 84]],		// ER = hook (+ breve/horn), RT = hook + circumflex
+        [[90, 88],	[88, 67]]		// ZX = tilde (+ breve/horn), XC = tilde + circumflex
+];
+
+VietKK.ComposedLetters = [	// Array of Vietnamese diacritic consonant / double consonants / diacritic vowels, column index locate the lowercase/uppercase ones.
         ["đ", "Đ", "Đ"],
         ["ch", "Ch", "CH"],
         ["gh", "Gh", "GH"],
         ["kh", "Kh", "KH"],
         ["ng", "Ng", "NG"],
         ["nh", "Nh", "NH"],
+        ["ngh", "Ngh", "NGH"],
         ["ph", "Ph", "PH"],
         ["qu", "Qu", "QU"],
         ["tr", "Tr", "TR"],
         ["th", "Th", "TH"],
-        ["gi", "Gi", "GI"]
-      ];
+        ["gi", "Gi", "GI"],
+        ["ơ", "Ơ", "Ơ"],
+        ["ư", "Ư", "Ư"]
+];
 
-VietKK.ConsonantKeys = [	// Key codes to type the corresponding letters in the Consonants array
+VietKK.ComposedLetterKeys = [	// Key codes to type the corresponding letters in the ComposedLetters array
         [68, 70],		// DF -> đ
         [67, 86],		// CV -> ch
         [71, 72],		// GH -> gh
         [75, 76],		// KL -> kh
         [78, 77],		// NM -> ng
         [78, 74],		// NJ -> nh
+        [78, 66],		// NB -> NGH
         [80, 219],		// P[ -> ph
         [81, 87],		// QW -> qu
         [84, 82],		// TR -> tr
         [84, 72],		// TH -> th
-        [70, 71]		// FG -> gi
-      ];
+        [70, 71],		// FG -> gi
+        [79, 80],		// OP -> ơ
+        [85, 73]		// UI -> ư
+];
 
 VietKK.prototype.setMode = function(mode) {		// Enable or disable KK method
     this.active = (mode > 0);
@@ -121,7 +155,7 @@ VietKK.prototype.attach = function(el) {	// Register an element (el)
             && self.hasAnyKKey()) {
             let currentPressTime = Date.now();
             if (self.previousPressTime != 0 &&
-			    currentPressTime - self.previousPressTime > self.maxInterval) {	// Quick typing case
+			    currentPressTime - self.previousPressTime > self.keyInterval) {	// Quick typing case
                 let caseIdx = self.getCaseIndex(e);
                 let keyCode = self.keyToCode(e.which);
                 if (self.kk.hasOwnProperty(keyCode))
@@ -208,21 +242,17 @@ VietKK.prototype.getCaseIndex = function(e, shiftJustUp = false) {
 };
 
 VietKK.prototype.printLetter = function(typer, caseIdx) {
-    if (!this.modifyWordTone(typer)) {
-        let letter = this.readVowel(caseIdx);
+    if (!this.replaceVowelDiacritics(typer)) {		// If keys are diacritic and tone, place them to existed vowels
+        letter = this.readComposedLetter(caseIdx);		// If keys are not diacritic or tone, read them as consonant
         if (letter === 0) {
-            letter = this.readConsonant(caseIdx);
-            if (letter === 0) {
-                this.printASCIILetters(typer, caseIdx);
-                this.readReady = true;	// Always print all ASCII letters typed
-            } else
-                this.printDiacriticLetter(typer, letter);
+            this.printASCII(typer, caseIdx);		// If not consonant, they're normal Latin letters
+            this.readReady = true;					// Always print all ASCII letters typed
         } else
-            this.printDiacriticLetter(typer, letter);
+            this.printComposedLetter(typer, letter);
     }
 };
 
-VietKK.prototype.printASCIILetters = function(typer, caseIdx) {	// Print keys in KK array in ASCII (with all case/non-case)
+VietKK.prototype.printASCII = function(typer, caseIdx) {	// Print keys in KK array in ASCII (with all case/non-case)
     for (var code in this.kk)
         if (this.kk.hasOwnProperty(code) && this.kk[code]) {
             let curPos = typer.selectionStart;
@@ -234,7 +264,7 @@ VietKK.prototype.printASCIILetters = function(typer, caseIdx) {	// Print keys in
     this.clear();
 };
 
-VietKK.prototype.printDiacriticLetter = function(typer, letter) {	// Print letter(s) from keys in KK array
+VietKK.prototype.printComposedLetter = function(typer, letter) {	// Print letter(s) from keys in KK array
     let curPos = typer.selectionStart;
     typer.value = typer.value.substring(0, curPos) + letter
                      + typer.value.substring(typer.selectionEnd);
@@ -242,106 +272,174 @@ VietKK.prototype.printDiacriticLetter = function(typer, letter) {	// Print lette
     this.clear();
 };
 
-VietKK.prototype.readVowel = function(caseIdx) {					// Return row index in Vowels array
-    for (let i = 0; i < VietKK.VowelKeys.length; i++) {
-        if (VietKK.VowelKeys[i][0]) {
-            let result = this.kk[VietKK.VowelKeys[i][0]] && this.kk[VietKK.VowelKeys[i][1]];
-            if (VietKK.VowelKeys[i][2])
-                result &&= this.kk[VietKK.VowelKeys[i][2]];
-            if (result)
-                return VietKK.Vowels[i][0][caseIdx > 0 ? 1 : 0];
-        }
-    }
-
-    return 0;	// no vowel detected
-};
-
-VietKK.prototype.readConsonant = function(caseIdx) {				// Return row index in Consonants array
-    for (let i = 0; i < VietKK.ConsonantKeys.length; i++) {
-        if (this.kk[VietKK.ConsonantKeys[i][0]] &&
-            this.kk[VietKK.ConsonantKeys[i][1]])
-            return VietKK.Consonants[i][caseIdx];
+VietKK.prototype.readComposedLetter = function(caseIdx) {				// Return row index in ComposedLetters array
+    for (let i = 0; i < VietKK.ComposedLetterKeys.length; i++) {
+        if (this.kk[VietKK.ComposedLetterKeys[i][0]] &&
+            this.kk[VietKK.ComposedLetterKeys[i][1]])
+            return VietKK.ComposedLetters[i][caseIdx];
     }
 
     return 0;	// no consonant detected
 };
 
-VietKK.prototype.modifyWordTone = function(typer) {
-    var toneIdx = this.getToneIndex();
-    if (toneIdx === 0) return false;
+VietKK.prototype.replaceVowelDiacritics = function(typer) {
+    const [keyDiacritic, keyTone] = this.getKeyDiacritics();
+    if (keyDiacritic === 0) return false;							// 0 = no key pressed, (1 = none/breve/horn, 2 = circumflex)
+
+    var diacriticIdx = keyDiacritic;								// 1 = no diacritic, 2 = circumflex
     const curPos = typer.selectionStart;
-    const [startPos, endPos] = this.getWordPosition(typer.value, curPos);
-    if (startPos === endPos ||										// No character exists
+    const [startPos, vowels, vowelsPos, endWithConsonant, wordDiacritic, wordTone] = this.readWordParts(typer.value, curPos);
+    if (vowelsPos === -1 ||											// No character exists
         startPos === curPos)										// Only allow to set tone after letters in the word
         return false;
-    var vowelAtLast = false;
 
-    for (var tonePos = endPos - 1; tonePos >= startPos; tonePos--) {	// Search vowels in backward direction
-        // Set tone for the first seen diacritic vowel
-        for (var i = 2; i < 8; i++)
-            for (let j = 0; j < 6; j++)
-                for (let caseId = 0; caseId < 2; caseId++)
-                    if (typer.value.charAt(tonePos) === VietKK.Vowels[i][j][caseId]) {
-                        this.setVowelTone(typer, tonePos, i, toneIdx, caseId);
-                        this.clear();
-                        return true;
-                    }
-        // Set tone for the second seen bare vowel (without diacritic)
-        let letterCount = endPos - tonePos;
-        DoubleBareVowelsLoop: for (i = 8; i < VietKK.Vowels.length; i++)
-            for (let j = 0; j < 6; j++)
-                for (let caseId = 0; caseId < 2; caseId++)
-                    if (typer.value.charAt(tonePos) === VietKK.Vowels[i][j][caseId]) {
-                        if (letterCount === 1 &&					// Vowel at the last position
-                          !(startPos === tonePos - 2 &&				// Except cases: word begin with "gi" or "qu"
-                          ((typer.value.charAt(startPos).toLowerCase() === 'g' &&
-                            typer.value.charAt(startPos + 1).toLowerCase() === 'i') ||
-                           (typer.value.charAt(startPos).toLowerCase() === 'q' &&
-                            typer.value.charAt(startPos + 1).toLowerCase() === 'u')))) {
-                            vowelAtLast = true;
-                            var lastVowelIdx = i;
-                            var lastCaseId = caseId;
-                            break DoubleBareVowelsLoop;
-                        } else {		// Set tone at second last vowel or vowel before tail consonant
-                            this.setVowelTone(typer, tonePos, i, toneIdx, caseId);
-                            this.clear();
-                            return true;
-                        }
-                    }
+    // When press the key combination twice or giving the word with the same diacritics and tone, we switch the diacritic
+    if (keyTone === wordTone) {
+        if (keyDiacritic === 1) {									// 1 (= none/breve/horn)
+            if (wordDiacritic === 1) diacriticIdx = 3;				// no diacritic --> breve/horn (already true with case of breve/horn --> no diacritic)
+        } else {													// 2 (= circumflex)
+            if (wordDiacritic === 2) diacriticIdx = 3;				// circumflex --> breve/horn
+        }
     }
 
-    // Set tone for the last vowel in this word
-    if (vowelAtLast) {
-        this.setVowelTone(typer, endPos - 1, lastVowelIdx, toneIdx, lastCaseId);
-        this.clear();
-        return true;
-    }
+    var latinVowels = this.toLatinVowels(vowels);
+    var lowerLatinVowels = latinVowels.toLowerCase();
+    var newVowels = "";
 
-    return false;		// no tone keys pressed after any vowel
+    switch (vowels.length) {
+        case 1:		// Check for known single vowel (converted to Latin letters)
+            for (let i = 0; i < VietKK.SingleVowel.length; i++) {
+                if (lowerLatinVowels === VietKK.SingleVowel[i][0]) {
+                    newVowels = VietKK.Vowels[VietKK.SingleVowel[i][diacriticIdx]][keyTone][latinVowels.charCodeAt(0) > 96 ? 0 : 1];
+
+                    this.printVowels(typer, newVowels, vowelsPos);
+                    this.clear();
+                    return true;
+                }
+            }
+            break;
+
+        case 3:		// Check for known triple vowels (converted to Latin letters)
+            for (let i = 0; i < VietKK.TripleVowels.length; i++) {
+                if (lowerLatinVowels === VietKK.TripleVowels[i][0]) {
+                    newVowels = VietKK.Vowels[VietKK.TripleVowels[i][diacriticIdx][0]][1][latinVowels.charCodeAt(0) > 96 ? 0 : 1] +
+                                VietKK.Vowels[VietKK.TripleVowels[i][diacriticIdx][1]][keyTone][latinVowels.charCodeAt(1) > 96 ? 0 : 1] +	// tone placed on middle vowel
+                                VietKK.Vowels[VietKK.TripleVowels[i][diacriticIdx][2]][1][latinVowels.charCodeAt(2) > 96 ? 0 : 1];
+
+                    this.printVowels(typer, newVowels, vowelsPos);
+                    this.clear();
+                    return true;
+                }
+            }
+            // No break if not found, then cut triple vowels to double vowels to continue checking
+            newVowels = latinVowels.charAt(0);
+            lowerLatinVowels = lowerLatinVowels.substr(1);
+            latinVowels = latinVowels.substr(1);
+
+        case 2:		// Check for known double vowels (converted to Latin letters)
+            for (let i = 0; i < VietKK.DoubleVowels.length; i++) {
+                if (lowerLatinVowels === VietKK.DoubleVowels[i][0]) {
+                    if (!endWithConsonant && lowerLatinVowels === "uo") i++;	// Special case: uo = "uơ" (index = 5) instead "ươ" (index=4). Don't change VietKK.DoubleVowels indexes!!
+
+                    if (endWithConsonant || VietKK.DoubleVowels[i][diacriticIdx][1] < 6) {	// word end with consonant or last vowel has diacritic (VietKK.Vowel index 0...5)
+                        newVowels += VietKK.Vowels[VietKK.DoubleVowels[i][diacriticIdx][0]][1][latinVowels.charCodeAt(0) > 96 ? 0 : 1] +
+                                     VietKK.Vowels[VietKK.DoubleVowels[i][diacriticIdx][1]][keyTone][latinVowels.charCodeAt(1) > 96 ? 0 : 1];	// tone placed on last vowel
+                    } else {
+                        newVowels += VietKK.Vowels[VietKK.DoubleVowels[i][diacriticIdx][0]][keyTone][latinVowels.charCodeAt(0) > 96 ? 0 : 1] +
+                                     VietKK.Vowels[VietKK.DoubleVowels[i][diacriticIdx][1]][1][latinVowels.charCodeAt(1) > 96 ? 0 : 1];		// tone placed on last vowel
+                    }
+
+                    this.printVowels(typer, newVowels, vowelsPos);
+                    this.clear();
+                    return true;
+                }
+            }
+    }	// switch   
+
+    return false;		// no diacritic keys pressed
 };
 
-VietKK.prototype.getWordPosition = function(text, curPos) {
+VietKK.prototype.readWordParts = function(text, curPos) {
     var start = curPos;
-    var end = curPos;
+    var vowels = "";
+    var vowelsPos = -1;		// no vowel in word!!
+    var endWithConsonant = false;
+    var wordDiacritic = 1;
+    var wordTone = 1;
+
+    // Scan backward to find start position
     while (start > 0 && text.charAt(start - 1) != ' ') start--;
-    while (end < text.length && text.charAt(end) != ' ') end++;
+
+    // Scan forward to find vowels
+    var end = start;
+    var curLetter = text.charAt(end);
+    while (end < text.length && curLetter != ' ') {
+        let [vowelDiacritic, vowelTone] = this.getVowelDiacritics(curLetter);
+        if (vowelDiacritic > 0) {	// Is a vowel
+            vowels += curLetter;
+            if (vowelsPos === -1) vowelsPos = end;
+            if (vowelDiacritic > 1) wordDiacritic = vowelDiacritic;
+            if (vowelTone > 1) wordTone = vowelTone;
+        }
+        end++;
+        curLetter = text.charAt(end);
+    }
  
-    return [start, end];
+    endWithConsonant = (vowelsPos + vowels.length < end);
+    // Special case for consonant "gi", "qu"
+    if (((vowels.charAt(0) === 'i' || vowels.charAt(0) === 'I') && (text.charAt(start) === 'g'  || text.charAt(start) === 'G')) ||
+        ((vowels.charAt(0) === 'u' || vowels.charAt(0) === 'U') && (text.charAt(start) === 'q'  || text.charAt(start) === 'Q'))) {
+        let wordLength = end - start;
+        if (wordLength > 2 && (!endWithConsonant || wordLength > 3)) {	// not "gì", "gìn"
+            vowels = vowels.substr(1);									// Cut first vowel "i" (part of "gi")
+            vowelsPos++;
+        }
+    }
+ 
+    return [start, vowels, vowelsPos, endWithConsonant, wordDiacritic, wordTone];
 };
 
-VietKK.prototype.setVowelTone = function(typer, tonePos, vowelIdx, toneIdx, caseIdx) {
-    const letter = VietKK.Vowels[vowelIdx][toneIdx][caseIdx];
+VietKK.prototype.printVowels = function(typer, vowels, vowelsPos) {
     const curPos = typer.selectionStart;
-    typer.value = typer.value.substring(0, tonePos) + letter
-                + typer.value.substring(tonePos + 1);
+    typer.value = typer.value.substring(0, vowelsPos) + vowels
+                + typer.value.substring(vowelsPos + vowels.length);
     typer.selectionStart = typer.selectionEnd = curPos;
 };
 
-VietKK.prototype.getToneIndex = function() {		// Return column index in VowelKeys array (1..5)
-    for (let j = 0; j < 5; j++) {
-        if (this.kk[VietKK.ToneKeys[j][0]] && this.kk[VietKK.ToneKeys[j][1]])
-            return j + 1;	// 1 = acute, 2 = grave, 3 = dot, 4 = question, 5 = tilde
+VietKK.prototype.toLatinVowels = function(vowels) {
+    var newVowels = "";
+    for (let vowelId = 0; vowelId < vowels.length; vowelId++) {
+        for (let i = 0; i < VietKK.Vowels.length; i++)
+            for (let j = 1; j < 7; j++)
+                for (let caseId = 0; caseId < 2; caseId++)
+                    if (vowels[vowelId] === VietKK.Vowels[i][j][caseId])
+                        newVowels += VietKK.Vowels[i][0][caseId];
     }
 
-    return 0;			// no tone key pressed
+    return newVowels;
+};
+
+VietKK.prototype.getVowelDiacritics = function(letter) {	// Return: (0 = not vowel, 1 = no diacritic, 2 = circumflex, 3 = breve/horn), index of tones = 1...6
+    for (let i = 0; i < VietKK.Vowels.length; i++)
+        for (let j = 1; j < 7; j++)
+            for (let caseId = 0; caseId < 2; caseId++)
+                if (letter === VietKK.Vowels[i][j][caseId])
+                    switch (i) {							// For this function to work, don't change the VietKK.Vowels indexes!!
+                        case 0: case 2: case 4:		return [2, j];		// Circumflex
+                        case 1: case 3: case 5:		return [3, j];		// Breve/horn
+                        default:					return [1, j];		// No diacritic
+                   }
+
+    return [0, 0];												// Not a vowel
+};
+
+VietKK.prototype.getKeyDiacritics = function() {	// Locate indexes of diacritic keys pressed for use in SingleVowels, DoubleVowels, TripleVowels
+    for (let i = 0; i < 6; i++)						// 6 types of tone key pairs
+        for (let j = 0; j < 2; j++) {				// 2 diacritic key pairs
+            if (VietKK.DiacriticKeys[i][j] &&
+                this.kk[VietKK.DiacriticKeys[i][j][0]] && this.kk[VietKK.DiacriticKeys[i][j][1]])
+                return [j + 1, i + 1];				// Return: (index of (none/breve/horn = 1, circumflex = 2), index of tones = 1...6)
+        }
+
+    return [0, 0];									// no diacritic key pressed
 };
