@@ -9,10 +9,11 @@ Phương pháp này không chiếm dụng các phím đơn như S,F,R,X,J (TELEX
 - Để có **dấu mũ thì nhấn cặp phím bên phải**, **các dấu phụ còn lại thì nhấn cặp phím bên trái** (nhấn luân phiên để đổi dấu).
 
 Ví dụ: **dấu sắc có mũ** thì nhấn **S** + phím phải (**D**); **chỉ dấu sắc** thì nhấn **S** + phím trái (**A**); **dấu sắc có trăng** thì nhấn **2 lần S + A**.
+
 Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có thể dùng các cặp phím khác để gõ tiện hơn như ghi chú bên dưới.
 
 # Hướng dẫn gõ trên bàn phím QWERTY:
-<img src="kk_keyboard_layout.jpg" width="800" height="400"/>
+<img src="k2k_keyboard_layout.jpg" width="800" height="400"/>
 
 # Online Demo: [k2.ai.vn/kk](https://k2.ai.vn/kk)
 
