@@ -13,7 +13,7 @@ Ví dụ: **dấu sắc có mũ** thì nhấn **S** + phím phải (**D**); **ch
 Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có thể dùng các cặp phím khác để gõ tiện hơn như ghi chú bên dưới.
 
 # Hướng dẫn gõ trên bàn phím QWERTY:
-<img src="k2k_keyboard_layout.jpg" width="800" height="400"/>
+<img src="kk_keyboard_layout.jpg" width="800" height="400"/>
 
 # Online Demo: [k2.ai.vn/kk](https://k2.ai.vn/kk)
 
