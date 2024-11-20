@@ -1,13 +1,12 @@
 /**
  * KK (Key Combinations) - A Vietnamese input method by Le Phuoc Loc
- * KK Input Editor v2.3 - KK Implementation for TextBox/TextArea elements in browsers
+ * KK Input Editor v2.3.1 - KK Implementation for TextBox/TextArea elements in browsers
  * Created on Aug-04-2024 by Le Phuoc Loc: https://github.com/locple/VietKK
- * Updated on Nov-19-2024
+ * Updated on Nov-20-2024
  */
 
-function VietKK(mode) {	// Class VietKK
-    // mode: 1=KK (default), 0=off
-    this.active = !(mode == undefined || mode == null || mode == 0);
+function VietKK(mode) {		// Class VietKK
+    this.active = !(mode == undefined || mode == null || mode == 0);    	// mode: 1=KK (default), 0=off
     this.kk = {			// Current status of all KK keys
         65: false,	66: false,	67: false,	68: false,	69: false,
         70: false,	71: false,	72: false,	73: false,	74: false,	75: false,	76: false,	77: false,	78: false,	79: false,
@@ -19,7 +18,8 @@ function VietKK(mode) {	// Class VietKK
     this.typers = [];		// Array of attached typers (TextAreas, TextBoxes)
 }
 
-VietKK.Vowels = [	// Single vowels columns: = Latin letter (for convertion only), 6 tones (level,acute,grave,dot,hook,tilde)
+// List of all Vietnamese vowels in all cases, diacritics (and tones). Used for searching and printing.
+VietKK.Vowels = [		// Vowels columns: = Latin letter (for convertion only), 6 tones (level,acute,grave,dot,hook,tilde)
         [["a", "A"],	["â", "Â"],  ["ấ", "Ấ"],  ["ầ", "Ầ"],  ["ậ", "Ậ"],  ["ẩ", "Ẩ"],  ["ẫ", "Ẫ"]],	// 0: First diacritic vowel index (used in placing tones)
         [["a", "A"],	["ă", "Ă"],  ["ắ", "Ắ"],  ["ằ", "Ằ"],  ["ặ", "Ặ"],  ["ẳ", "Ẳ"],  ["ẵ", "Ẵ"]],	// 1
         [["e", "E"],	["ê", "Ê"],  ["ế", "Ế"],  ["ề", "Ề"],  ["ệ", "Ệ"],  ["ể", "Ể"],  ["ễ", "Ễ"]],	// 2
@@ -34,7 +34,8 @@ VietKK.Vowels = [	// Single vowels columns: = Latin letter (for convertion only)
         [["y", "Y"],	["y", "Y"],  ["ý", "Ý"],  ["ỳ", "Ỳ"],  ["ỵ", "Ỵ"],  ["ỷ", "Ỷ"],  ["ỹ", "Ỹ"]]	// 11
 ];
 
-VietKK.SingleVowel = [	// Double vowel columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+// List of all Vietnamese 1-letter vowels, referencing to VietKK.Vowels letters.
+VietKK.SingleVowel = [		// Single vowel columns: Latin vowels (for searching only), diacritic letter (none, circumflex, breve/horn) with values refer to Vowels row index.
         ["a",	6,		0,		1],		// a: a â ă
         ["e",	7,		2,		2],		// e: e ê ê
         ["i",	8,		8,		8],		// i: i i i
@@ -43,7 +44,8 @@ VietKK.SingleVowel = [	// Double vowel columns: Latin vowels, diacritics (none, 
         ["y",	11,		11,		11]		// y: y y y
 ];
 
-VietKK.DoubleVowels = [	// Double vowel columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+// List of all Vietnamese 2-letter vowels, referencing to VietKK.Vowels letters.
+VietKK.DoubleVowels = [		// Double vowel columns: Latin vowels (for searching only), diacritics letter (none, circumflex, breve/horn) with values refer to Vowels row index.
         ["ai",	[6, 8],		[6, 8],		[6, 8]],		// ai: ai ai ai		// Also for oai
         ["ao",	[6, 9],		[6, 9],		[6, 9]],		// ao: ao ao ao		// Also for uao, oao (example hoao)
         ["au",	[6, 10],	[0, 10],	[0, 10]],		// au: au âu âu
@@ -64,17 +66,19 @@ VietKK.DoubleVowels = [	// Double vowel columns: Latin vowels, diacritics (none,
         ["uu",	[10, 10],	[3, 10],	[3, 10]],		// uu: uu ưu ưu
         ["uy",	[10, 11],	[10, 11],	[10, 11]],		// uy: uy uy uy
         ["ye",	[11, 2],	[11, 2],	[11, 2]],		// ye: yê yê yê		// Also for uyê
-        ["oo",	[9, 9],		[4, 4],		[4, 4]]			// oo: oo ôô ôô
+        ["oo",	[9, 9],		[4, 4],		[4, 4]]			// oo: oo ôô ôô		// Only for oong and ôông
 ];
 
-VietKK.TripleVowels = [	// Triple vowel (not all) columns: Latin vowels, diacritics (none, circumflex, breve/horn). Diacritic values refer to Vowels row index.
+// List of some Vietnamese 3-letter vowels (the others processed by VietKK.DoubleVowels), referencing to VietKK.Vowels letters.
+VietKK.TripleVowels = [		// Triple vowel (not all) columns: Latin vowels (for searching only), diacritics (none, circumflex, breve/horn) with values refer to Vowels row index.
         ["uoi",	[3, 5, 8],		[10, 4, 8],		[3, 5, 8]],		// uoi: ươi uôi ươi
         ["uou",	[3, 5, 10],		[3, 5, 10],		[3, 5, 10]],	// uou: ươu ươu ươu
         ["uya",	[10, 11, 6],	[10, 11, 6],	[10, 11, 6]],	// uya: uya uya uya
         ["uyu",	[10, 11, 10],	[10, 11, 10],	[10, 11, 10]]	// uyu: uyu uyu uyu (example khuỷu)
 ];
 
-VietKK.DiacriticKeys = [	// Key codes to type diacritics after the whole word (or when modifying it). Row indexes = 6 tones, column indexes = (none, circumflex, breve/horn)
+// Key codes to type diacritics (and tones) after the whole word (or when modifying it).
+VietKK.DiacriticKeys = [	// Rows: 6 tones; Columns = (none, circumflex, breve/horn)
         [[87, 69],	[73, 79]],		// WE = level + breve/horn, IO = level + circumflex
         [[65, 83],	[83, 68]],		// AS = acute (+ breve/horn), SD = acute + circumflex
         [[68, 70],	[70, 71]],		// DF = grave (+ breve/horn), FG = grave + circumflex
@@ -83,7 +87,8 @@ VietKK.DiacriticKeys = [	// Key codes to type diacritics after the whole word (o
         [[90, 88],	[88, 67]]		// ZX = tilde (+ breve/horn), XC = tilde + circumflex
 ];
 
-VietKK.ComposedLetters = [	// Array of Vietnamese diacritic consonant / double consonants / diacritic vowels, column index locate the lowercase/uppercase ones.
+// List of Vietnamese composed diacritic consonants / double consonants / diacritic vowels
+VietKK.ComposedLetters = [	// Columns: lowercase, half uppercase, full uppercase
         ["đ", "Đ", "Đ"],
         ["ch", "Ch", "CH"],
         ["gh", "Gh", "GH"],
@@ -100,7 +105,8 @@ VietKK.ComposedLetters = [	// Array of Vietnamese diacritic consonant / double c
         ["ư", "Ư", "Ư"]
 ];
 
-VietKK.ComposedLetterKeys = [	// Key codes to type the corresponding letters in the ComposedLetters array
+// Key codes to type VietKK.ComposedLetters. Require having corresponding indexes with VietKK.ComposedLetters.
+VietKK.ComposedLetterKeys = [
         [68, 70],		// DF -> đ
         [67, 86],		// CV -> ch
         [71, 72],		// GH -> gh
@@ -123,9 +129,11 @@ VietKK.prototype.setMode = function(mode) {		// Enable or disable KK method
     this.readReady = true;
 };
 
-////VietKK.prototype.deattach() not supported yet
+VietKK.prototype.setKeyInterval = function(time) {
+    this.keyInterval = time;
+};
 
-VietKK.prototype.attach = function(el) {	// Register an element (el)
+VietKK.prototype.attach = function(el) {		// Register an element (el)
     if (!el) return;
     else this.typers.push(el);					// Add the new typer to array typers
 
@@ -194,6 +202,8 @@ VietKK.prototype.attach = function(el) {	// Register an element (el)
     });
 };
 
+////VietKK.prototype.deattach() not supported yet
+
 VietKK.prototype.clear = function() {		// Clear KK keys status
     for (var code in this.kk)
         if (this.kk.hasOwnProperty(code)) this.kk[code] = false;
@@ -209,9 +219,9 @@ VietKK.prototype.hasAnyKKey = function() {	// Is there any KK key pressed?
 VietKK.prototype.keyToCode = function(key) {
     var keyCode;
 
-    if (key > 96 && key < 123)		// a ... z
-        keyCode = key - 32;			// -> A ... Z
-    else if (key === 91)				// [
+    if (key > 96 && key < 123)				// a ... z
+        keyCode = key - 32;					// -> A ... Z
+    else if (key === 91)					// [
         keyCode = 219;
     else
         keyCode = key;
@@ -222,7 +232,7 @@ VietKK.prototype.keyToCode = function(key) {
 VietKK.prototype.codeToKey = function(keyCode, caseIdx) {
     var key;
 
-    if (keyCode > 64 && keyCode < 91)	// A ... Z
+    if (keyCode > 64 && keyCode < 91)		// A ... Z
         key = keyCode + (caseIdx > 0 ? 0 : 32);
     else if (keyCode === 219)
         key = (caseIdx === 1 ? 123 : 91);
@@ -235,15 +245,15 @@ VietKK.prototype.codeToKey = function(keyCode, caseIdx) {
 VietKK.prototype.getCaseIndex = function(e, shiftJustUp = false) {
     if (e.getModifierState && e.getModifierState("CapsLock"))
         if (e.shiftKey || shiftJustUp) return 0;	// Both CapsLock, Shift
-        else return 2;				// CapsLock only
+        else return 2;						// CapsLock only
     else
         if (e.shiftKey || shiftJustUp) return 1;	// Shift only
-        else return 0;				// Neither CapsLock, Shift
+        else return 0;						// Neither CapsLock, Shift
 };
 
 VietKK.prototype.printLetter = function(typer, caseIdx) {
     if (!this.replaceVowelDiacritics(typer)) {		// If keys are diacritic and tone, place them to existed vowels
-        letter = this.readComposedLetter(caseIdx);		// If keys are not diacritic or tone, read them as consonant
+        letter = this.readComposedLetter(caseIdx);	// If keys are not diacritic or tone, read them as consonant
         if (letter === 0) {
             this.printASCII(typer, caseIdx);		// If not consonant, they're normal Latin letters
             this.readReady = true;					// Always print all ASCII letters typed
@@ -272,7 +282,7 @@ VietKK.prototype.printComposedLetter = function(typer, letter) {	// Print letter
     this.clear();
 };
 
-VietKK.prototype.readComposedLetter = function(caseIdx) {				// Return row index in ComposedLetters array
+VietKK.prototype.readComposedLetter = function(caseIdx) {			// Return row index in ComposedLetters array
     for (let i = 0; i < VietKK.ComposedLetterKeys.length; i++) {
         if (this.kk[VietKK.ComposedLetterKeys[i][0]] &&
             this.kk[VietKK.ComposedLetterKeys[i][1]])
@@ -294,11 +304,15 @@ VietKK.prototype.replaceVowelDiacritics = function(typer) {
         return false;
 
     // When press the key combination twice or giving the word with the same diacritics and tone, we switch the diacritic
-    if (keyTone === wordTone) {
-        if (keyDiacritic === 1) {									// 1 (= none/breve/horn)
-            if (wordDiacritic === 1) diacriticIdx = 3;				// no diacritic --> breve/horn (already true with case of breve/horn --> no diacritic)
-        } else {													// 2 (= circumflex)
-            if (wordDiacritic === 2) diacriticIdx = 3;				// circumflex --> breve/horn
+    if (keyTone === 1 && keyDiacritic === 1) {						// WE were pressed
+        if (wordDiacritic != 3) diacriticIdx = 3;
+    } else {
+        if (keyTone === wordTone) {									// Key combinations pressed twice
+            if (keyDiacritic === 1) {								// 1 (= none/breve/horn)
+                if (wordDiacritic === 1) diacriticIdx = 3;			// no diacritic --> breve/horn (already true with case of breve/horn --> no diacritic)
+            } else {												// 2 (= circumflex)
+                if (wordDiacritic === 2) diacriticIdx = 3;			// circumflex --> breve/horn
+            }
         }
     }
 
