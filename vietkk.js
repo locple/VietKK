@@ -1,8 +1,8 @@
 /**
  * KK (Key Combinations) - A Vietnamese input method by Le Phuoc Loc
- * KK Input Editor v2.3.1 - KK Implementation for TextBox/TextArea elements in browsers
+ * KK Input Editor v2.3.2 - KK Implementation for TextBox/TextArea elements in browsers
  * Created on Aug-04-2024 by Le Phuoc Loc: https://github.com/locple/VietKK
- * Updated on Nov-20-2024
+ * Updated on Nov-21-2024
  */
 
 function VietKK(mode) {		// Class VietKK
@@ -305,7 +305,7 @@ VietKK.prototype.replaceVowelDiacritics = function(typer) {
 
     // When press the key combination twice or giving the word with the same diacritics and tone, we switch the diacritic
     if (keyTone === 1 && keyDiacritic === 1) {						// WE were pressed
-        if (wordDiacritic != 3) diacriticIdx = 3;
+        if (wordDiacritic != 3 || wordTone != 1) diacriticIdx = 3;
     } else {
         if (keyTone === wordTone) {									// Key combinations pressed twice
             if (keyDiacritic === 1) {								// 1 (= none/breve/horn)
