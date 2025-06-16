@@ -1,20 +1,19 @@
 # Gõ tiếng Việt bằng KK (Dual Keystrokes or Key Combinations)
 
-Tổ hợp phím có nghĩa là nhấn đồng thời 2 phím cùng lúc để gõ dấu tiếng Việt, không gõ tuần tự từng phím dấu nữa.
+Phím đôi có nghĩa là nhấn đồng thời 2 phím cạnh nhau để gõ dấu tiếng Việt, không gõ tuần tự từng phím đơn khi thêm dấu như các kiểu gõ trước đây.
 
-Phương pháp này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1,...,8 (VNI) để gõ dấu mà chỉ dùng các cặp phím chữ (*ít có phần mềm nào dùng ngoại trừ games*). Nhờ vậy có thể gõ văn bản hỗn hợp tiếng Việt và tiếng Anh một cách tiện lợi.
-
-Đầu tiên **gõ chữ không có dấu**, sau đó **thêm đồng thời dấu thanh và dấu phụ** bằng cách nhấn cùng lúc cặp phím như hình dưới.
-- **Phím dấu thanh chính** gồm: **S, F, R, X, J** (sắc, huyền, hỏi, ngã, nặng). Nhấn phím trái hay phải cùng lúc với phím chính để gõ dấu.
-- Để có **dấu mũ thì nhấn cặp phím bên phải**, **các dấu phụ còn lại thì nhấn cặp phím bên trái** (nhấn luân phiên để đổi dấu).
-
-Ví dụ: **dấu sắc có mũ** thì nhấn **S** + phím phải (**D**); **chỉ dấu sắc** thì nhấn **S** + phím trái (**A**); **dấu sắc có trăng** thì nhấn **2 lần S + A**.
-
-Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có thể dùng các cặp phím khác để gõ tiện hơn như ghi chú bên dưới.
+Phương pháp này không chiếm dụng các phím chết như S,F,R,X,J (TELEX) hay 1,2,3,4,5,6,7,8 (VNI) để gõ dấu mà chỉ dùng các phím đôi chữ cái. Nhờ vậy có thể gõ văn bản hỗn hợp tiếng Việt và tiếng Anh một cách tiện lợi.
 
 # Hướng dẫn gõ trên bàn phím QWERTY:
-<img src="kk_keyboard_layout.jpg" width="800" height="400"/>
-<img src="kk_layout_extended.jpg" width="1200" height="400"/>
+Đầu tiên **gõ chữ không có dấu**, sau đó **thêm đồng thời dấu thanh và dấu phụ** bằng cách nhấn cùng lúc cặp phím như hình dưới.
+- **Phím dấu thanh chính** gồm: **S, F, R, X, J** (sắc, huyền, hỏi, ngã, nặng). Tùy theo dấu phụ cần gõ mà nhấn phím đôi trái hay phím đôi phải.
+- Từ **không có dấu phụ thì nhấn cặp phím bên trái**, từ **có dấu phụ thì nhấn cặp phím bên phải** (nhấn luân phiên để thay đổi dấu phụ).
+
+Ví dụ: **dấu sắc có mũ** thì nhấn **S** + phím phải (**D**); **chỉ dấu sắc** thì nhấn **S** + phím trái (**A**); **dấu sắc có trăng** thì nhấn **2 lần S + D**.
+
+Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có thể dùng các cặp phím khác để gõ tiện hơn như ghi chú bên dưới.
+<img src="kk_layout_basic.jpg" width="800" height="300"/>
+<img src="kk_layout_extended.jpg" width="800" height="80"/>
 
 # Online Demo: [kk.ai.vn](https://kk.ai.vn)
 
