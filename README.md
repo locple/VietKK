@@ -14,6 +14,7 @@ Phụ âm **Đ**: nhấn cặp phím **DF**. Ngoài ra, nếu thuần thục có
 
 # Hướng dẫn gõ trên bàn phím QWERTY:
 <img src="kk_keyboard_layout.jpg" width="800" height="400"/>
+<img src="kk_layout_extended.jpg" width="1200" height="400"/>
 
 # Online Demo: [kk.ai.vn](https://kk.ai.vn)
 
