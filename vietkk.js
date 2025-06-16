@@ -1,8 +1,8 @@
 /**
  * KK (Key Combinations) - A Vietnamese input method by Le Phuoc Loc
- * KK Input Editor v2.3.2 - KK Implementation for TextBox/TextArea elements in browsers
+ * KK Input Editor v2.3.3 - KK Implementation for TextBox/TextArea elements in browsers
  * Created on Aug-04-2024 by Le Phuoc Loc: https://github.com/locple/VietKK
- * Updated on Nov-21-2024
+ * Updated on Jun-17-2025
  */
 
 function VietKK(mode) {		// Class VietKK
@@ -102,7 +102,9 @@ VietKK.ComposedLetters = [	// Columns: lowercase, half uppercase, full uppercase
         ["th", "Th", "TH"],
         ["gi", "Gi", "GI"],
         ["ơ", "Ơ", "Ơ"],
-        ["ư", "Ư", "Ư"]
+        ["ư", "Ư", "Ư"],
+        ["ê", "Ê", "Ê"],
+        ["ô", "Ô", "Ô"]
 ];
 
 // Key codes to type VietKK.ComposedLetters. Require having corresponding indexes with VietKK.ComposedLetters.
@@ -120,7 +122,9 @@ VietKK.ComposedLetterKeys = [
         [84, 72],		// TH -> th
         [70, 71],		// FG -> gi
         [79, 80],		// OP -> ơ
-        [85, 73]		// UI -> ư
+        [85, 73],		// UI -> ư
+        [87, 69],		// WE -> ê
+        [73, 79]		// IO -> ô
 ];
 
 VietKK.prototype.setMode = function(mode) {		// Enable or disable KK method
@@ -282,6 +286,10 @@ VietKK.prototype.printComposedLetter = function(typer, letter) {	// Print letter
     this.clear();
 };
 
+VietKK.prototype.isLetter = function(ch) {							// Check if a character is Vietnamese/English letter?
+	return /^[a-zA-Z\u00C0-\u1EF9]$/.test(ch);
+}
+
 VietKK.prototype.readComposedLetter = function(caseIdx) {			// Return row index in ComposedLetters array
     for (let i = 0; i < VietKK.ComposedLetterKeys.length; i++) {
         if (this.kk[VietKK.ComposedLetterKeys[i][0]] &&
@@ -382,12 +390,12 @@ VietKK.prototype.readWordParts = function(text, curPos) {
     var wordTone = 1;
 
     // Scan backward to find start position
-    while (start > 0 && text.charAt(start - 1) != ' ') start--;
+    while (start > 0 && this.isLetter(text.charAt(start - 1))) start--;
 
     // Scan forward to find vowels
     var end = start;
     var curLetter = text.charAt(end);
-    while (end < text.length && curLetter != ' ') {
+    while (end < text.length && this.isLetter(curLetter)) {
         let [vowelDiacritic, vowelTone] = this.getVowelDiacritics(curLetter);
         if (vowelDiacritic > 0) {	// Is a vowel
             vowels += curLetter;
@@ -400,14 +408,17 @@ VietKK.prototype.readWordParts = function(text, curPos) {
     }
  
     endWithConsonant = (vowelsPos + vowels.length < end);
-    // Special case for consonant "gi", "qu"
-    if (((vowels.charAt(0) === 'i' || vowels.charAt(0) === 'I') && (text.charAt(start) === 'g'  || text.charAt(start) === 'G')) ||
-        ((vowels.charAt(0) === 'u' || vowels.charAt(0) === 'U') && (text.charAt(start) === 'q'  || text.charAt(start) === 'Q'))) {
+    // Special case for consonant "gi"
+    if ((vowels.charAt(0) === 'i' || vowels.charAt(0) === 'I') && (text.charAt(start) === 'g'  || text.charAt(start) === 'G')) {
         let wordLength = end - start;
         if (wordLength > 2 && (!endWithConsonant || wordLength > 3)) {	// not "gì", "gìn"
             vowels = vowels.substr(1);									// Cut first vowel "i" (part of "gi")
             vowelsPos++;
         }
+    } // Special case for consonant "qu"
+    else if ((vowels.charAt(0) === 'u' || vowels.charAt(0) === 'U') && (text.charAt(start) === 'q'  || text.charAt(start) === 'Q')) {
+        vowels = vowels.substr(1);									// Cut first vowel "u" (part of "qu")
+        vowelsPos++;
     }
  
     return [start, vowels, vowelsPos, endWithConsonant, wordDiacritic, wordTone];
