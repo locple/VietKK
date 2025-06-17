@@ -1,4 +1,4 @@
-# Gõ tiếng Việt bằng KK (Dual Keystrokes or Key Combinations)
+# Gõ tiếng Việt bằng KK (Dual Keystrokes / Key Combinations)
 
 Phím đôi có nghĩa là nhấn đồng thời 2 phím cạnh nhau để gõ dấu tiếng Việt, không gõ tuần tự từng phím đơn khi thêm dấu như các kiểu gõ trước đây.
 
