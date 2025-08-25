@@ -15,7 +15,7 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 <ins>**Trường hợp từ có dấu thanh**</ins>:
 - Nếu từ **không có dấu phụ thì nhấn phím đôi bên trái** một lần, KK sẽ tự điền dấu thanh đúng vị trí cho cả từ.
 - Nếu từ **có dấu mũ thì nhấn phím đôi bên phải** một lần, KK sẽ tự điền dấu thanh và dấu mũ đúng vị trí cho cả từ.
-- Nếu từ **có dấu trăng (breve) hay dấu móc (horn) thì nhấn phím đôi bên phải 2 lần**, KK sẽ tự điền dấu thanh và chọn các dấu phụ thích hợp cho cả từ.
+- Nếu từ **có dấu trăng (breve) hay dấu móc (horn) thì nhấn phím đôi bên phải 2 lần** (nếu dấu mũ làm cho từ vô nghĩa thì chỉ cần nhấn 1 lần), KK sẽ tự điền dấu thanh và chọn các dấu phụ thích hợp cho cả từ.
 
 <ins>**Trường hợp các từ không có dấu thanh mà chỉ có dấu phụ**</ins>:
 - Nếu từ có dấu mũ (*circumflex*) thì nhấn phím đôi **I + O**, KK sẽ tự điền dấu mũ đúng vị trí.
