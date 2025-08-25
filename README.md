@@ -12,14 +12,14 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 
 Đầu tiên **gõ từ tiếng Việt không dấu**, ngoại trừ từ có **phụ âm Đ** thì nhấn phím đôi **D + F** để gõ chữ Đ trước. Sau đó gõ dấu thanh và dấu phụ cho cả từ như hình dưới:
 
-<ins>**Trường hợp từ có dấu thanh (sắc, huyền, hỏi, ngã, nặng)**</ins>:
+<ins>**Trường hợp từ có dấu thanh**</ins>: sắc (*acute*), huyền (*grave*), hỏi (*hook*), ngã (*tilde*), nặng (*dot*)
 - Nếu từ **không có dấu phụ thì nhấn phím đôi bên trái** một lần, KK sẽ tự điền dấu thanh đúng vị trí cho cả từ.
 - Nếu từ **có dấu mũ thì nhấn phím đôi bên phải** một lần, KK sẽ tự điền dấu thanh và dấu mũ đúng vị trí cho cả từ.
-- Nếu từ **có dấu trăng (breve) hay dấu móc (horn) thì nhấn phím đôi bên phải 2 lần** (nếu dấu mũ làm cho từ vô nghĩa thì nhấn 1 lần cũng được), KK sẽ tự điền dấu thanh và chọn các dấu phụ thích hợp cho cả từ.
+- Nếu từ **có dấu trăng hay dấu móc thì nhấn phím đôi bên phải 2 lần** (nếu dấu mũ làm cho từ vô nghĩa thì nhấn 1 lần cũng được), KK sẽ tự điền dấu thanh và chọn các dấu phụ thích hợp cho cả từ.
 
-<ins>**Trường hợp các từ không có dấu thanh mà chỉ có dấu phụ (dấu mũ, trăng, móc)**</ins>:
-- Nếu từ có dấu mũ (*circumflex*) thì nhấn phím đôi **I + O**, KK sẽ tự điền dấu mũ đúng vị trí.
-- Nếu từ có dấu trăng (*breve*) hay dấu móc (*horn*) thì nhấn phím đôi **W + E**, KK sẽ tự động điền các dấu phụ thích hợp cho cả từ.
+<ins>**Trường hợp từ không có dấu thanh mà chỉ có dấu phụ**</ins>: mũ (*circumflex*), trăng (*breve*), móc (*horn*)
+- Nếu từ **có dấu mũ thì nhấn phím đôi I + O**, KK sẽ tự điền dấu mũ đúng vị trí.
+- Nếu từ **có dấu trăng hay dấu móc thì nhấn phím đôi W + E**, KK sẽ tự động điền các dấu phụ thích hợp cho cả từ.
 
 <img src="kk_layout_basic.jpg" width="800" height="300"/>
 
@@ -29,7 +29,7 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 - Từ **chỉ có dấu hỏi** thì nhấn **E + R**; từ có **dấu hỏi và dấu phụ** thì nhấn **R + T**.
 - Từ **chỉ có dấu ngã** thì nhấn **Z + X**; từ có **dấu ngã và dấu phụ** thì nhấn **X + C**.
 - Từ **chỉ có dấu nặng** thì nhấn **H + J**; từ có **dấu nặng và dấu phụ** thì nhấn **J + K**.
-- Từ **không dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng (breve) hay dấu móc (horn)** thì nhấn **W + E**.
+- Từ **không dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng hay dấu móc** thì nhấn **W + E**.
 - Gõ phụ âm "Đ" thì nhấn **D + F**.
 
 Nếu thuần thục cách gõ KK cơ bản, có thể dùng các phím đôi KK mở rộng để gõ phụ âm kép hay nguyên âm kép nhanh hơn như hình dưới:
