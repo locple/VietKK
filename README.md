@@ -32,15 +32,10 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 - Từ **không dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng hay dấu móc** thì nhấn **W + E**.
 - Gõ phụ âm "Đ" thì nhấn **D + F**.
 
+# Các phím đôi KK mở rộng
 Nếu thuần thục cách gõ KK cơ bản, có thể dùng các phím đôi KK mở rộng để gõ phụ âm kép hay nguyên âm kép nhanh hơn như hình dưới:
 
 <img src="kk_layout_extended.jpg" width="800" height="80"/>
-
-**Tóm tắt các phím đôi KK mở rộng**:
-
-W + E = "Ê", I+O = "Ô", O + P = "Ơ", U + I = "Ư", T + R = "TR", T + H = "TH", G + H = "GH", N + M = "NG",
-
-C + V = "CH", Q + W = "QU", F + G = "GI", P + [ = "PH", K + L = "KH", N + J = "NH", N + B = "NGH"
 
 > [!NOTE]
 > KK là kiểu gõ dành cho bàn phím máy tính (PC/ Laptop), không dùng cho bàn phím cảm ứng (smartphone, tablet...).
