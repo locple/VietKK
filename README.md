@@ -29,7 +29,7 @@ Tóm tắt kiểu gõ KK cơ bản:
 - Gõ **chỉ dấu hỏi** thì nhấn **E + R**; gõ **dấu hỏi có mũ** thì nhấn **R + T**; gõ **dấu hỏi có trăng hay móc** thì nhấn **2 lần R + T**.
 - Gõ **chỉ dấu ngã** thì nhấn **Z + X**; gõ **dấu ngã có mũ** thì nhấn **X + C**; gõ **dấu ngã có trăng hay móc** thì nhấn **2 lần X + C**.
 - Gõ **chỉ dấu nặng** thì nhấn **H + J**; gõ **dấu nặng có mũ** thì nhấn **J + K**; gõ **dấu nặng có trăng hay móc** thì nhấn **2 lần J + K**.
-- Từ Không dấu thanh, chỉ có dấu mũ thì nhấn **I + O**; chỉ có dấu trăng (breve) hay dấu móc (horn) thì nhấn **W + E**.
+- Từ không có dấu thanh, chỉ có dấu mũ thì nhấn **I + O**; chỉ có dấu trăng (breve) hay dấu móc (horn) thì nhấn **W + E**.
 - Gõ phụ âm "Đ" thì nhấn **D + F**.
 
 Nếu thuần thục cách gõ KK cơ bản, có thể dùng các phím đôi KK mở rộng để gõ phụ âm kép hay nguyên âm kép nhanh hơn như hình dưới:
