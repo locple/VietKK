@@ -23,26 +23,27 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 
 <img src="kk_layout_basic.jpg" width="800" height="300"/>
 
-Tóm tắt kiểu gõ KK cơ bản:
+# Tóm tắt kiểu gõ KK cơ bản:
 - Từ **chỉ có dấu sắc** thì nhấn **S + A**; từ có **dấu sắc và dấu phụ** thì nhấn **S + D**.
 - Từ **chỉ có dấu huyền** thì nhấn **D + F**; từ có **dấu huyền và dấu phụ** thì nhấn **F + G**.
 - Từ **chỉ có dấu hỏi** thì nhấn **E + R**; từ có **dấu hỏi và dấu phụ** thì nhấn **R + T**.
 - Từ **chỉ có dấu ngã** thì nhấn **Z + X**; từ có **dấu ngã và dấu phụ** thì nhấn **X + C**.
 - Từ **chỉ có dấu nặng** thì nhấn **H + J**; từ có **dấu nặng và dấu phụ** thì nhấn **J + K**.
-- Từ **không có dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng (breve) hay dấu móc (horn)** thì nhấn **W + E**.
+- Từ **không dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng (breve) hay dấu móc (horn)** thì nhấn **W + E**.
 - Gõ phụ âm "Đ" thì nhấn **D + F**.
 
 Nếu thuần thục cách gõ KK cơ bản, có thể dùng các phím đôi KK mở rộng để gõ phụ âm kép hay nguyên âm kép nhanh hơn như hình dưới:
 
 <img src="kk_layout_extended.jpg" width="800" height="80"/>
 
-Tóm tắt các phím đôi KK mở rộng:
+**Tóm tắt các phím đôi KK mở rộng**:
 
 W + E = "Ê", I+O = "Ô", O + P = "Ơ", U + I = "Ư", T + R = "TR", T + H = "TH", G + H = "GH", N + M = "NG",
 
 C + V = "CH", Q + W = "QU", F + G = "GI", P + [ = "PH", K + L = "KH", N + J = "NH", N + B = "NGH"
 
-**Lưu ý KK là kiểu gõ dành cho bàn phím máy tính (PC/ Laptop), không dùng cho bàn phím cảm ứng (smartphone, tablet...)**.
+> [!NOTE]
+> KK là kiểu gõ dành cho bàn phím máy tính (PC/ Laptop), không dùng cho bàn phím cảm ứng (smartphone, tablet...).
 
 # Online Demo: [kk.ai.vn](https://kk.ai.vn)
 
