@@ -35,7 +35,7 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 - Từ **chỉ chứa dấu nặng** thì nhấn **H + J**
 - Từ chứa **dấu nặng và dấu phụ** thì nhấn **J + K**
 - Từ **không có dấu thanh, chỉ chứa dấu mũ** thì nhấn **I + O**
-- Từ **không có dấu thanh, chỉ chứa **dấu trăng hay dấu móc** thì nhấn **W + E**
+- Từ **không có dấu thanh, chỉ chứa dấu trăng hay dấu móc** thì nhấn **W + E**
 - Gõ phụ âm "Đ" thì nhấn **D + F**
 
 # Các phím đôi KK mở rộng
