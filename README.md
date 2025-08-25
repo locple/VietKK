@@ -5,8 +5,8 @@
 Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1,2,3,4,5,6,7,8 (VNI) mà dùng các phím đôi chữ cái để gõ dấu tiếng Việt. Nhờ vậy có thể gõ văn bản hỗn hợp tiếng Việt và tiếng Anh hay gõ mật khẩu, các ký hiệu như (EF, A1...) một cách mượt mà, tiện lợi mà không cần phải chuyển đổi qua lại giữa chế độ gõ Anh - Việt.
 
 Để người dùng TELEX dễ tiếp cận, KK cũng định nghĩa 5 **phím dấu thanh** gồm: **S, F, R, X, J** tương ứng với 5 dấu thanh (sắc, huyền, hỏi, ngã, nặng) trong tiếng Việt. Từ đó định nghĩa 2 loại phím đôi:
-- Phím đôi bên trái dấu thanh: gồm phím dấu thanh và phím sát bên trái nó
-- Phím đôi bên phải dấu thanh: gồm phím dấu thanh và phím sát bên phải nó
+- **Phím đôi bên trái phím dấu thanh**: gồm phím dấu thanh và phím sát bên trái nó
+- **Phím đôi bên phải phím dấu thanh**: gồm phím dấu thanh và phím sát bên phải nó
 
 # Hướng dẫn gõ dấu tiếng Việt trên bàn phím QWERTY:
 
