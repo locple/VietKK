@@ -24,12 +24,12 @@ Kiểu gõ này không chiếm dụng các dead key như S,F,R,X,J (TELEX) hay 1
 <img src="kk_layout_basic.jpg" width="800" height="300"/>
 
 Tóm tắt kiểu gõ KK cơ bản:
-- Gõ **chỉ dấu sắc** thì nhấn **S + A**; gõ **dấu sắc có mũ** thì nhấn **S + D**; gõ **dấu sắc có trăng hay móc** thì nhấn **2 lần S + D**.
-- Gõ **chỉ dấu huyền** thì nhấn **D + F**; gõ **dấu huyền có mũ** thì nhấn **F + G**; gõ **dấu huyền có trăng hay móc** thì nhấn **2 lần F + G**.
-- Gõ **chỉ dấu hỏi** thì nhấn **E + R**; gõ **dấu hỏi có mũ** thì nhấn **R + T**; gõ **dấu hỏi có trăng hay móc** thì nhấn **2 lần R + T**.
-- Gõ **chỉ dấu ngã** thì nhấn **Z + X**; gõ **dấu ngã có mũ** thì nhấn **X + C**; gõ **dấu ngã có trăng hay móc** thì nhấn **2 lần X + C**.
-- Gõ **chỉ dấu nặng** thì nhấn **H + J**; gõ **dấu nặng có mũ** thì nhấn **J + K**; gõ **dấu nặng có trăng hay móc** thì nhấn **2 lần J + K**.
-- Từ không có dấu thanh, chỉ có dấu mũ thì nhấn **I + O**; chỉ có dấu trăng (breve) hay dấu móc (horn) thì nhấn **W + E**.
+- Từ **chỉ có dấu sắc** thì nhấn **S + A**; từ có **dấu sắc và dấu phụ** thì nhấn **S + D**.
+- Từ **chỉ có dấu huyền** thì nhấn **D + F**; từ có **dấu huyền và dấu phụ** thì nhấn **F + G**.
+- Từ **chỉ có dấu hỏi** thì nhấn **E + R**; từ có **dấu hỏi và dấu phụ** thì nhấn **R + T**.
+- Từ **chỉ có dấu ngã** thì nhấn **Z + X**; từ có **dấu ngã và dấu phụ** thì nhấn **X + C**.
+- Từ **chỉ có dấu nặng** thì nhấn **H + J**; từ có **dấu nặng và dấu phụ** thì nhấn **J + K**.
+- Từ **không có dấu thanh: chỉ có dấu mũ** thì nhấn **I + O**, chỉ có **dấu trăng (breve) hay dấu móc (horn)** thì nhấn **W + E**.
 - Gõ phụ âm "Đ" thì nhấn **D + F**.
 
 Nếu thuần thục cách gõ KK cơ bản, có thể dùng các phím đôi KK mở rộng để gõ phụ âm kép hay nguyên âm kép nhanh hơn như hình dưới:
